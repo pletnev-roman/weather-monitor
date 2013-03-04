@@ -1,0 +1,15 @@
+#!/bin/sh
+
+again="yes"
+while [ "$again"="yes" ]
+do
+	wget -q --directory-prefix=/tmp http://www.meteo.by/minsk
+	page=`grep --after-context=4 '<p class="t ">' /tmp/minsk`
+
+	#echo "begin"
+	#echo $page
+	echo $page|sed 's/<strong>//'|sed 's/<p class=\"t \">//'
+
+	rm /tmp/minsk
+	sleep 1s
+done
